@@ -6,7 +6,7 @@ Check python3 is installed by typing ``` python ``` in terminal.
 If python is not installed install it from here https://www.python.org/downloads/
 
 
-MacOSX
+## Installation on MacOSX
 
 1. clone the project
 ```
