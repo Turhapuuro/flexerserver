@@ -1,3 +1,4 @@
 # Add ignores here
 
 __pycache__/
+.DS_Store
