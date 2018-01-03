@@ -1,7 +1,9 @@
 from django.db import models
+import uuid
 
 # Create your models here.
 class User(models.Model):
+    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.CharField(max_length=40, blank=False)
     first_name = models.CharField(max_length=20, blank=False)
     last_name = models.CharField(max_length=20, blank=False)
@@ -10,6 +12,7 @@ class User(models.Model):
         return '%s, %s, %s' % (self.email, self.first_name, self.last_name)
 
 class Task(models.Model):
+    task_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255, blank=False)
     start_date = models.DateTimeField(auto_now=False, auto_now_add=False)
     end_date = models.DateTimeField(auto_now=False, auto_now_add=False)

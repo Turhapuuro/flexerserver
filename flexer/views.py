@@ -21,14 +21,27 @@ def user_list(request):
         return JsonResponse(serializer.data, safe=False)
 
 @csrf_exempt
-def fetch_tasks(request):
+def manage_tasks(request):
     """
     Fetch all tasks
     """
+    tasks = Task.objects.all()
+
     if request.method == 'GET':
-        tasks = Task.objects.all()
         serializer = TaskSerializer(tasks, many=True)
         return JsonResponse(serializer.data, safe=False)
+
+@csrf_exempt
+def delete_tasks(request):
+    """
+    Fetch all tasks
+    """
+    print(request)
+    print(request.data)
+   # if request.method == 'DELETE':
+    #    task = Task.objects.get(task_id=request.DELETE['id'])
+     #   task.delete()
+      #  return HttpResponse(status=204)
 
 @csrf_exempt
 def snippet_list(request):
