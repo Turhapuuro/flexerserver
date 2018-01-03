@@ -12,36 +12,58 @@ from flexer.serializers import UserSerializer, TaskSerializer, SnippetSerializer
 
 @csrf_exempt
 def user_list(request):
-    """
-    List all users
-    """
+    # List all users
     if request.method == 'GET':
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return JsonResponse(serializer.data, safe=False)
 
 @csrf_exempt
-def manage_tasks(request):
-    """
-    Fetch all tasks
-    """
-    tasks = Task.objects.all()
-
+def fetch_tasks(request):
+    # Fetch all tasks
     if request.method == 'GET':
+        tasks = Task.objects.all()
         serializer = TaskSerializer(tasks, many=True)
         return JsonResponse(serializer.data, safe=False)
 
+    # Create new task
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = TaskSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            # Currently returns all tasks in response.
+            # Fix this to only return the new object.
+            tasks = Task.objects.all()
+            serializer = TaskSerializer(tasks, many=True)
+            return JsonResponse(serializer.data, safe=False)
+        return JsonResponse(serializer.errors, status=400)
+
 @csrf_exempt
-def delete_tasks(request):
-    """
-    Fetch all tasks
-    """
-    print(request)
-    print(request.data)
-   # if request.method == 'DELETE':
-    #    task = Task.objects.get(task_id=request.DELETE['id'])
-     #   task.delete()
-      #  return HttpResponse(status=204)
+def manage_task(request, pk):
+    # Check if task exists
+    try:
+        task = Task.objects.get(pk=pk)
+    except Task.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'DELETE':
+        task.delete()
+        # Currently returns all tasks in response.
+        # Remove the deleted item in frontend when response is successful.
+        tasks = Task.objects.all()
+        serializer = TaskSerializer(tasks, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    # elif request.method == 'PUT':
+    #     data = JSONParser().parse(request)
+    #     serializer = TaskSerializer(task, data=data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return JsonResponse(serializer.data)
+    #     return JsonResponse(serializer.errors, status=400)
+    
+
 
 @csrf_exempt
 def snippet_list(request):
