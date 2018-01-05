@@ -32,10 +32,6 @@ def fetch_tasks(request):
         serializer = TaskSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            # Currently returns all tasks in response.
-            # Fix this to only return the new object.
-            # tasks = Task.objects.all()
-            # serializer = TaskSerializer(tasks, many=True)
             return JsonResponse(serializer.data, safe=False)
         return JsonResponse(serializer.errors, status=400)
 
@@ -49,10 +45,6 @@ def manage_task(request, pk):
 
     if request.method == 'DELETE':
         task.delete()
-        # Currently returns all tasks in response.
-        # Remove the deleted item in frontend when response is successful.
-        # tasks = Task.objects.all()
-        # serializer = TaskSerializer(tasks, many=True)
         return JsonResponse(pk, safe=False)
 
     elif request.method == 'PUT':
