@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ('task_id', 'name', 'start_date', 'end_date', 'break_time', 'total_hours')
+        fields = ('task_id', 'name', 'date', 'start', 'end', 'break_time', 'total_hours')
 
 class SnippetSerializer(serializers.ModelSerializer):
     class Meta:

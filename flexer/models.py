@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+import datetime
 
 # Create your models here.
 class User(models.Model):
@@ -14,9 +15,9 @@ class User(models.Model):
 class Task(models.Model):
     task_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255, blank=False)
-    start_date = models.DateTimeField(auto_now=False, auto_now_add=False)
-    end_date = models.DateTimeField(auto_now=False, auto_now_add=False)
-    # Expected format HH:mm
+    date = models.DateField(auto_now=False, auto_now_add=False, default=datetime.date.today)
+    start = models.DateTimeField(auto_now=False, auto_now_add=False)
+    end = models.DateTimeField(auto_now=False, auto_now_add=False)
     break_time = models.TimeField(auto_now=False, auto_now_add=False)
     total_hours = models.TimeField(auto_now=False, auto_now_add=False)
     def __str__(self):
