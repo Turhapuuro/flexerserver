@@ -15,7 +15,7 @@ class User(models.Model):
 class Task(models.Model):
     task_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255, blank=False)
-    date = models.DateField(auto_now=False, auto_now_add=False, default=datetime.date.today)
+    date = models.DateTimeField(auto_now=False, auto_now_add=False)
     start = models.DateTimeField(auto_now=False, auto_now_add=False)
     end = models.DateTimeField(auto_now=False, auto_now_add=False)
     break_time = models.TimeField(auto_now=False, auto_now_add=False)
