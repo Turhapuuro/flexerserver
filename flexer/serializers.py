@@ -14,7 +14,7 @@ class ClientSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('id', 'name', 'client')
+        fields = ('id', 'name', 'client_id')
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:

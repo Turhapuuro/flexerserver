@@ -3,21 +3,14 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from flexer.models import User, Project, Client, Task, Snippet
+from flexer.models import User, Client, Project, Task, Snippet
 from flexer.serializers import UserSerializer, ClientSerializer, ProjectSerializer, TaskSerializer, SnippetSerializer
 
 # Create your views here.
 #def index(request):
  #   return render(request, 'flexer/index.html')
 
-@csrf_exempt
-def fetch_projects(request):
-    # List all users
-    if request.method == 'GET':
-        projects = Project.objects.all()
-        serializer = ProjectSerializer(projects, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
+# USERS
 @csrf_exempt
 def user_list(request):
     # List all users
@@ -26,6 +19,27 @@ def user_list(request):
         serializer = UserSerializer(users, many=True)
         return JsonResponse(serializer.data, safe=False)
 
+
+# CLIENTS
+def fetch_clients(request):
+    # Fetch all clients
+    if request.method == 'GET':
+        clients = Client.objects.all()
+        serializer = ClientSerializer(clients, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+
+# PROJECTS
+@csrf_exempt
+def fetch_projects(request):
+    # Fetch all projects
+    if request.method == 'GET':
+        projects = Project.objects.all()
+        serializer = ProjectSerializer(projects, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+
+# TASKS
 @csrf_exempt
 def fetch_tasks(request):
     # Fetch all tasks
@@ -64,8 +78,7 @@ def manage_task(request, pk):
         return JsonResponse(serializer.errors, status=400)
 
 
-
-
+# DEMO
 @csrf_exempt
 def snippet_list(request):
     """
