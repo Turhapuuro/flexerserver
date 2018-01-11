@@ -3,12 +3,20 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from flexer.models import User, Task, Snippet
-from flexer.serializers import UserSerializer, TaskSerializer, SnippetSerializer
+from flexer.models import User, Project, Client, Task, Snippet
+from flexer.serializers import UserSerializer, ClientSerializer, ProjectSerializer, TaskSerializer, SnippetSerializer
 
 # Create your views here.
 #def index(request):
  #   return render(request, 'flexer/index.html')
+
+@csrf_exempt
+def fetch_projects(request):
+    # List all users
+    if request.method == 'GET':
+        projects = Project.objects.all()
+        serializer = ProjectSerializer(projects, many=True)
+        return JsonResponse(serializer.data, safe=False)
 
 @csrf_exempt
 def user_list(request):
@@ -54,7 +62,8 @@ def manage_task(request, pk):
             serializer.save()
             return JsonResponse(serializer.data)
         return JsonResponse(serializer.errors, status=400)
-    
+
+
 
 
 @csrf_exempt

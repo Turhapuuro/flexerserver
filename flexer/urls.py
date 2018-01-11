@@ -6,6 +6,7 @@ urlpatterns = [
     #url(r'^', views.index, name='index'),
     url(r'^snippets/$', views.snippet_list),
     url(r'^users/$', views.user_list),
+    url(r'^projects/$', views.fetch_projects),
     url(r'^tasks/$', views.fetch_tasks),
     url(r'^tasks/(?P<pk>[^/]+)/$', views.manage_task),
 ]

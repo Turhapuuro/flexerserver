@@ -12,6 +12,19 @@ class User(models.Model):
     def __str__(self):
         return '%s, %s, %s' % (self.email, self.first_name, self.last_name)
 
+class Client(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255, blank=False)
+    def __str__(self):
+        return '%s' % (self.name)
+
+class Project(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
+    name = models.CharField(max_length=255, blank=False)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    def __str__(self):
+        return '%s' % (self.name)
+
 class Task(models.Model):
     task_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255, blank=False)
@@ -20,9 +33,11 @@ class Task(models.Model):
     end = models.DateTimeField(auto_now=False, auto_now_add=False)
     break_time = models.TimeField(auto_now=False, auto_now_add=False)
     total_hours = models.TimeField(auto_now=False, auto_now_add=False)
+    project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
     def __str__(self):
         return '%s' % (self.name)
-
+    class Meta:
+        ordering = ('-date',)
 
 class Snippet(models.Model):
     created = models.DateTimeField(auto_now_add=True)
