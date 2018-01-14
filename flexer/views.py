@@ -38,6 +38,14 @@ def fetch_projects(request):
         serializer = ProjectSerializer(projects, many=True)
         return JsonResponse(serializer.data, safe=False)
 
+    # Create new project
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = ProjectSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, safe=False)
+        return JsonResponse(serializer.errors, status=400)
 
 # TASKS
 @csrf_exempt

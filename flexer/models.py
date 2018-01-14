@@ -25,11 +25,11 @@ class Client(models.Model):
         return '%s' % (self.name)
 
 class Project(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255, blank=False)
-    description = models.CharField(max_length=255)
-    total_hours = models.TimeField(auto_now=False, auto_now_add=False, blank=True)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    description = models.CharField(max_length=255, blank=False)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
+    total_hours = models.TimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
     def __str__(self):
         return '%s' % (self.name)
 
@@ -41,7 +41,7 @@ class Task(models.Model):
     end = models.DateTimeField(auto_now=False, auto_now_add=False)
     break_time = models.TimeField(auto_now=False, auto_now_add=False)
     total_hours = models.TimeField(auto_now=False, auto_now_add=False)
-    project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project_id = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True)
     def __str__(self):
         return '%s' % (self.name)
     class Meta:
