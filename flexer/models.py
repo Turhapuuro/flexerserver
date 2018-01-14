@@ -15,12 +15,20 @@ class User(models.Model):
 class Client(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255, blank=False)
+    email = models.EmailField(max_length=255, blank=False)
+    phone = models.CharField(max_length=20, blank=False)
+    address = models.CharField(max_length=50, blank=False)
+    zip_code = models.IntegerField(blank=False)
+    city = models.CharField(max_length=30, blank=False)
+    business_id = models.CharField(max_length=30, blank=False)
     def __str__(self):
         return '%s' % (self.name)
 
 class Project(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     name = models.CharField(max_length=255, blank=False)
+    description = models.CharField(max_length=255)
+    total_hours = models.TimeField(auto_now=False, auto_now_add=False, blank=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     def __str__(self):
         return '%s' % (self.name)
