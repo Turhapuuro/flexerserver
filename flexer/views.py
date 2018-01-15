@@ -47,6 +47,26 @@ def fetch_projects(request):
             return JsonResponse(serializer.data, safe=False)
         return JsonResponse(serializer.errors, status=400)
 
+@csrf_exempt
+def manage_project(request, pk):
+    # Check if project exists
+    try:
+        project = Project.objects.get(pk=pk)
+    except Project.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'DELETE':
+        project.delete()
+        return JsonResponse(pk, safe=False)
+
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = ProjectSerializer(project, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=400)
+
 # TASKS
 @csrf_exempt
 def fetch_tasks(request):

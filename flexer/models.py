@@ -25,7 +25,7 @@ class Client(models.Model):
         return '%s' % (self.name)
 
 class Project(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     name = models.CharField(max_length=255, blank=False)
     description = models.CharField(max_length=255, blank=False)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
