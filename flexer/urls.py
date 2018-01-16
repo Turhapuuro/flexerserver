@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^snippets/$', views.snippet_list),
     url(r'^users/$', views.user_list),
     url(r'^clients/$', views.fetch_clients),
+    url(r'^clients/(?P<pk>[^/]+)/$', views.manage_client),
     url(r'^projects/$', views.fetch_projects),
     url(r'^projects/(?P<pk>[^/]+)/$', views.manage_project),
     url(r'^tasks/$', views.fetch_tasks),
