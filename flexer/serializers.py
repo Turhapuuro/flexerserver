@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'email', 'phone', 'address', 'zip_code', 'city', 'business_id')
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:

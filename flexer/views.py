@@ -21,12 +21,23 @@ def user_list(request):
 
 
 # CLIENTS
+@csrf_exempt
 def fetch_clients(request):
     # Fetch all clients
     if request.method == 'GET':
         clients = Client.objects.all()
         serializer = ClientSerializer(clients, many=True)
         return JsonResponse(serializer.data, safe=False)
+
+    # Create new client
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        print(data)
+        serializer = ClientSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, safe=False)
+        return JsonResponse(serializer.errors, status=400)
 
 @csrf_exempt
 def manage_client(request, pk):
@@ -40,13 +51,13 @@ def manage_client(request, pk):
         client.delete()
         return JsonResponse(pk, safe=False)
 
-    # elif request.method == 'PUT':
-    #     data = JSONParser().parse(request)
-    #     serializer = ProjectSerializer(project, data=data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return JsonResponse(serializer.data)
-    #     return JsonResponse(serializer.errors, status=400)
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = ClientSerializer(client, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=400)
 
 
 # PROJECTS
