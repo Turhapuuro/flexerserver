@@ -141,8 +141,8 @@ def manage_task(request, pk):
 def tasks_overview(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        first_day = data.first_day
-        last_day = data.last_day
+        first_day = data['first_day']
+        last_day = data['last_day']
         tasks = Task.objects.filter(date__range=(first_day, last_day))
         serializer = TaskSerializer(tasks, many=True)
         return JsonResponse(serializer.data, safe=False)
