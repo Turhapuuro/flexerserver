@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
+import datetime
 from flexer.models import User, Client, Project, Task, Snippet
 from flexer.serializers import UserSerializer, ClientSerializer, ProjectSerializer, TaskSerializer, SnippetSerializer
 
@@ -135,6 +136,16 @@ def manage_task(request, pk):
             serializer.save()
             return JsonResponse(serializer.data)
         return JsonResponse(serializer.errors, status=400)
+
+@csrf_exempt
+def tasks_overview(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        first_day = data.first_day
+        last_day = data.last_day
+        tasks = Task.objects.filter(date__range=(first_day, last_day))
+        serializer = TaskSerializer(tasks, many=True)
+        return JsonResponse(serializer.data, safe=False)
 
 
 # DEMO

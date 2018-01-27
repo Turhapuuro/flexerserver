@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^projects/(?P<pk>[^/]+)/$', views.manage_project),
     url(r'^tasks/$', views.fetch_tasks),
     url(r'^tasks/(?P<pk>[^/]+)/$', views.manage_task),  
+    url(r'^overview/$', views.tasks_overview),
 ]
