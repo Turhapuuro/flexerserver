@@ -27,7 +27,7 @@ class Client(models.Model):
 class Project(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     name = models.CharField(max_length=255, blank=False)
-    description = models.CharField(max_length=255, blank=False)
+    description = models.CharField(max_length=255, null=True, blank=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
     total_hours = models.TimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
     def __str__(self):
