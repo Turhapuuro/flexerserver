@@ -11,6 +11,10 @@
 </head>
 <body>
     <div id="app"></div>
+    <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'admin:index' %}">Admin</a></li>
+        </ul>
     <script src="{% static 'flexer/js/main.js' %}"></script>
 </body>
 </html>
