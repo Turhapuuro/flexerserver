@@ -15,12 +15,12 @@ class User(models.Model):
 class Client(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255, blank=False)
-    email = models.EmailField(max_length=255, blank=False)
-    phone = models.CharField(max_length=20, blank=False)
-    address = models.CharField(max_length=50, blank=False)
-    zip_code = models.IntegerField(blank=False)
-    city = models.CharField(max_length=30, blank=False)
-    business_id = models.CharField(max_length=30, blank=False)
+    email = models.EmailField(max_length=255, blank=True)
+    phone = models.CharField(max_length=20, blank=True)
+    address = models.CharField(max_length=50, blank=True)
+    zip_code = models.CharField(max_length=30, blank=True, null=True)
+    city = models.CharField(max_length=30, blank=True)
+    business_id = models.CharField(max_length=30, blank=True)
     def __str__(self):
         return '%s' % (self.name)
 
